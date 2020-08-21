@@ -233,6 +233,7 @@ income_statement_waterfall_charter <- function(income_statement){
         )
     ),
     name = fct_relevel(
+      name,
       c("Revenue",
         "Cost of Goods Sold",
         "Gross Profit",
@@ -273,4 +274,19 @@ income_statement_waterfall_charter(aapl_2019_annual_is)
 ```
 
 Note that we actually called our `cogs_get_funs()` function inside that visualizer function. We can call functions inside of other functions. 
+
+
+Become the site for quantamental research, for practitioners, for academicians. title, link, short pararaph, become the resource for practitioners too;
+
+Once we get to financial statements and monetary policy, need to talk about fed funds futures and then an event study; 
+then show financial statements; how to compute smart beta; take some ratios and construct own smart beta product; how to build; market cap, by sales, by ROA; that's what smart beta is doing; 
+
+now bring in alternate data and forecast revenue or whatever; 
+
+import, wrangle, model, build the app; so if want to build smart beta, go through the whole process; 
+want to make this easy as possible; 
+
+remember, the book and the lab a bit distinct.
+
+package RS Cloud with the book; 
 
