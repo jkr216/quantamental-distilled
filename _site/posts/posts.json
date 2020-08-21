@@ -1,18 +1,96 @@
 [
   {
-    "path": "posts/welcome/",
-    "title": "Welcome to Quantamental R Blog",
-    "description": "Welcome to our new blog, Quantamental R Blog. We hope you enjoy \nreading what we have to say!",
+    "path": "posts/2020-08-21-from-raw-fundies-to-ratios/",
+    "title": "From Raw Fundies to Ratios",
+    "description": "A short description of the post.",
     "author": [
       {
-        "name": "Nora Jones",
-        "url": "https://example.com/norajones"
+        "name": "Jonathan K. Regenstein",
+        "url": "https://fintech.gatech.edu/#/people"
+      },
+      {
+        "name": "Sudheer Chava",
+        "url": "https://fintech.gatech.edu/#/people"
+      }
+    ],
+    "date": "2020-08-21",
+    "categories": [
+      "quantamental",
+      "financial ratios"
+    ],
+    "preview": "posts/2020-08-21-from-raw-fundies-to-ratios/ratios.png",
+    "last_modified": "2020-08-21T09:23:34-04:00",
+    "input_file": {},
+    "preview_width": 1432,
+    "preview_height": 478
+  },
+  {
+    "path": "posts/2020-08-19-getting-functional-for-cogs/",
+    "title": "Getting Functional for COGS",
+    "description": "A short article on creating a function to calculate COGS.",
+    "author": [
+      {
+        "name": "Jonathan K. Regenstein",
+        "url": "https://fintech.gatech.edu/#/people"
+      },
+      {
+        "name": "Sudheer Chava",
+        "url": "https://fintech.gatech.edu/#/people"
+      }
+    ],
+    "date": "2020-08-19",
+    "categories": [],
+    "preview": "posts/2020-08-19-getting-functional-for-cogs/cogs-funs.png",
+    "last_modified": "2020-08-20T13:22:01-04:00",
+    "input_file": {}
+  },
+  {
+    "path": "posts/2020-08-18-quanta-versus-funda-mental/",
+    "title": "Quanta versus Funda Mental",
+    "description": "A quick introduction to what mean by quantamental.",
+    "author": [
+      {
+        "name": "Jonathan K. Regenstein",
+        "url": "https://fintech.gatech.edu/#/people"
+      },
+      {
+        "name": "Sudheer Chava",
+        "url": "https://fintech.gatech.edu/#/people"
       }
     ],
     "date": "2020-08-18",
-    "categories": [],
-    "preview": {},
-    "last_modified": "2020-08-18T14:51:07-04:00",
-    "input_file": {}
+    "categories": [
+      "quantamental"
+    ],
+    "preview": "posts/2020-08-18-quanta-versus-funda-mental/q-f.png",
+    "last_modified": "2020-08-20T13:17:34-04:00",
+    "input_file": {},
+    "preview_width": 700,
+    "preview_height": 450
+  },
+  {
+    "path": "posts/2020-08-19-a-brief-aside-on-apis/",
+    "title": "A Brief Aside on API's",
+    "description": "A quick primer on using API's, why they are important and why we use the Tiingo for fundamental data.",
+    "author": [
+      {
+        "name": "Jonathan K. Regenstein",
+        "url": "https://fintech.gatech.edu/#/people"
+      },
+      {
+        "name": "Sudheer Chava",
+        "url": "https://fintech.gatech.edu/#/people"
+      }
+    ],
+    "date": "2020-08-18",
+    "categories": [
+      "quantamental",
+      "api's"
+    ],
+    "preview": "posts/2020-08-19-a-brief-aside-on-apis/api-image.png",
+    "last_modified": "2020-08-20T13:15:18-04:00",
+    "input_file": {},
+    "preview_width": 1192,
+    "preview_height": 1304
   }
 ]

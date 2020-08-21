@@ -1,0 +1,215 @@
+---
+title: "Getting Functional for COGS"
+description: |
+  A short article on creating a function to calculate COGS.
+author:
+  - name: Jonathan K. Regenstein
+    url: https://fintech.gatech.edu/#/people
+  - name: Sudheer Chava
+    url: https://fintech.gatech.edu/#/people
+date: 08-19-2020
+preview: cogs-funs.png
+twitter:
+  site: "@jkregenstein"
+  creator: "@jkregenstein"
+output: 
+  distill::distill_article:
+    toc: true
+    toc_depth: 3
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(tidyquant)
+library(highcharter)
+library(timetk)
+library(tibbletime)
+library(scales)
+library(httr)
+library(jsonlite)
+library(plotly)
+library(here)
+library(riingo)
+
+api_key <-  config::get("tiingo", file = "config.yml")
+
+knitr::opts_chunk$set(message=FALSE, 
+                      warning=FALSE,
+                      comment = NA, 
+                      echo = TRUE)
+```
+
+In this post, we will walk through the construction of a function to calculate the Cost of Goods Sold (COGS) based on the Revenue and Goss Profit reported in a financial statement. Often COGS is a separate Income Statement item but it is not one reported in Tiingo fundamental data. 
+
+We covered the Tiingo fundamentals API in detail in [this post]() but by way of quick refresher, the following Income Statement fields are reported. 
+
+### Definitions
+
+Let's first review the definitions for each of the data codes in the Income Statement. 
+
+```{r}
+definitions <-
+  httr::GET(
+    url = str_glue("https://api.tiingo.com/tiingo/fundamentals/definitions?format=csv&token={api_key}")
+    ) %>%
+  content(as = "parsed")  %>%
+  select(statementType, everything()) %>%
+  arrange(statementType) 
+
+definitions %>% 
+  filter(statementType == "incomeStatement")
+```
+
+No mention of COGS, which gives us an opportunity to build a custom function for the job. If you're new to the world of R programming, that might seem like a huge task - building a custom function! Well, maybe that doesn't seem intimidating to you but when I was starting with R programming it seemed intimidating to me. The motivation behind function building is to save ourselves (and possibly our collaborators, or any R coder with whom we share our work) from having to copy paste lines and lines of code each time we want to perform a certain task.  If we want to bundle up a bunch of functions and share them, that becomes a package.  For example, when we use the `dplyr` package to `select()` a column, we using a function from the package. 
+
+We will approach this task from a utilitarian perspective, in the sense that we wish to build a function that accomplish our task and saves us time. We are not thinking from the perspective of a hard core package developer who might consider how a function scales, or how fast it runs on huge data sets, or how easy it is for random end users to consume. That stuff is important but first we want to get comfortable building functions for ourselves that accomplish the task at hand. Let's get to it. 
+
+### COGS Code
+
+We will start by calculating COGS without a function, but first we import financial statement data. We covered this extensively in [this post](url) and here is the code.
+
+```{r, echo =  FALSE}
+aapl_financial_statements <- 
+  GET(
+  url = str_glue(
+    "https://api.tiingo.com/tiingo/fundamentals/aapl/statements?format=csv&startDate=2018-01-01&endDate=2020-01-31&token={api_key}"
+  )) %>%
+  content(as = "parsed")  %>% 
+  left_join(definitions)
+```
+
+```{r,eval=FALSE}
+aapl_financial_statements <- 
+  GET(
+  url = str_glue(
+    "https://api.tiingo.com/tiingo/fundamentals/aapl/statements?format=csv&
+    startDate=2018-01-01&endDate=2020-01-31&token={api_key}"
+  )) %>%
+  content(as = "parsed")  %>% 
+  left_join(definitions)
+```
+
+We just imported all of the financial statements for Apple from 2018 to beginning of 2020. Let's `filter()` down to just the 10K Income Statement for 2019. We get the 10K by setting `filter(quarter == 0)`, which indicates we want the annual report.
+
+
+```{r}
+aapl_2019_annual_is <-  
+  aapl_financial_statements %>% 
+  filter(statementType == "incomeStatement",
+         year == 2019,
+         quarter == 0)
+```
+
+Next, we want to calculate COGS, which is the difference between Revenue and Gross Profit. Let's filter down to those two entries.
+
+```{r}
+aapl_2019_annual_is %>% 
+filter(dataCode %in% c("revenue", "grossProfit")) 
+```
+
+We want COGS as of a certain date, so let's `group_by(date)` and then `select()` just our columns of interest.
+
+```{r}
+aapl_2019_annual_is %>% 
+filter(dataCode %in% c("revenue", "grossProfit"))  %>% 
+  group_by(date) %>% 
+    select(date, dataCode, value)
+```
+
+Now we want the difference between `revenue` and `grossProfit`. That will be easier to accomplish if we `pivot_wider()` this data first and create two columns for the data.
+
+```{r}
+aapl_2019_annual_is %>% 
+filter(dataCode %in% c("revenue", "grossProfit"))  %>% 
+  group_by(date) %>% 
+    select(date, dataCode, value) %>% 
+  pivot_wider(names_from = "dataCode", values_from = "value") 
+```
+
+From here, we subtract `grossProfit` from `revenue`, inside of a call to `summarise()`.
+
+```{r}
+aapl_2019_annual_is %>% 
+filter(dataCode %in% c("revenue", "grossProfit"))  %>% 
+  group_by(date) %>% 
+    select(date, dataCode, value) %>% 
+  pivot_wider(names_from = "dataCode", values_from = "value") %>% 
+   summarise(cogs = revenue - grossProfit)
+```
+
+We eventually want to bind this data to our original Income Statement and thus we want to match the existing columns in `aapl_2019_annual_is`. 
+
+```{r}
+aapl_2019_annual_is %>% 
+filter(dataCode %in% c("revenue", "grossProfit"))  %>% 
+  group_by(date) %>% 
+    select(date, dataCode, value) %>% 
+  pivot_wider(names_from = "dataCode", values_from = "value") %>% 
+   summarise(value  = revenue - grossProfit)  %>% 
+    mutate(dataCode = "cogs", 
+           name = "Cost of Goods Sold",
+           units = "$",
+           statementType = "incomeStatement")
+```
+
+Putting it all together, with a final call to `bind_rows()`.
+
+
+```{r}
+cogs <- 
+  aapl_2019_annual_is %>% 
+filter(dataCode %in% c("revenue", "grossProfit"))  %>% 
+  group_by(date) %>% 
+    select(date, dataCode, value) %>% 
+  pivot_wider(names_from = "dataCode", values_from = "value") %>% 
+   summarise(value  = revenue - grossProfit)  %>% 
+    mutate(dataCode = "cogs", 
+           name = "Cost of Goods Sold",
+           units = "$",
+           statementType = "incomeStatement",
+           year = 2019, 
+           quarter = 0)
+
+
+aapl_2019_annual_is %>% 
+  bind_rows(cogs) %>% 
+  tail()
+```
+
+We have now calculated and added COGS to the Income Statement. It would be nice to be able to repeat process, without having to rewrite all that code. Have a close look at the chunk above and notice that it should work well on any Income Statetement that we import and wrangle from Tiingo. That is, we should be able to pass another Income Statement object into that same code flow. If that's so, we can create a function that accepts an Income Statement object and returns the cogs. Here's what that might look like:
+
+```{r}
+cogs_get_funs <- function(income_statement){
+  income_statement %>% 
+    filter(dataCode %in% c("revenue", "grossProfit")) %>% 
+    group_by(date) %>% 
+    select(date, dataCode, value) %>% 
+    pivot_wider(names_from = "dataCode", values_from = "value") %>% 
+    summarise(value = revenue - grossProfit) %>% 
+    mutate(dataCode = "cogs", 
+           name = "Cost of Goods Sold",
+           units = "$",
+           statementType = "incomeStatement")
+}
+```
+
+Let's see what happens when pass `aapl_2019_annual_is` to that function. 
+
+```{r}
+aapl_2019_annual_is %>% 
+  cogs_get_funs()
+```
+
+E voila! We did a lot of work to get that code flow just how we want it, but now we can efficiently pass any Income Statement to that function. How about putting `bind_rows()` into the same flow? 
+
+```{r}
+aapl_2019_annual_is %>% 
+  bind_rows(
+    cogs_get_funs(.)
+  ) %>% 
+  tail()
+```
+
+E double voila! We start with out object `aapl_2019_annual_is`, pipe it to `bind_rows()` and inside of `bind_rows()` we call `cogs_get_funs(.)`. That `.` in the parentheses tell our function to operate on the object `aapl_2019_annual_is`. 
+

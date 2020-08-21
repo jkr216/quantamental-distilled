@@ -1,9 +1,11 @@
 ---
 title: "About this blog"
 description: |
-  Some additional details about the blog
+  Blog to accompany the quantamental R project.
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
+
+Thoughts about this book and blog.

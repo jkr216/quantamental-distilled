@@ -1,0 +1,123 @@
+---
+title: "From Raw Fundies to Ratios"
+description: |
+  A short description of the post.
+author:
+  - name: Jonathan K. Regenstein
+    url: https://fintech.gatech.edu/#/people
+  - name: Sudheer Chava
+    url: https://fintech.gatech.edu/#/people
+date: 08-21-2020
+preview: ratios.png
+base_url: http://quantamentalr.com/
+categories:
+  - quantamental
+  - financial ratios
+twitter:
+  site: "@jkregenstein"
+  creator: "@jkregenstein"
+output: 
+  distill::distill_article:
+    toc: true
+    toc_depth: 3
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(tidyquant)
+library(highcharter)
+library(timetk)
+library(tibbletime)
+library(scales)
+library(httr)
+library(jsonlite)
+library(plotly)
+library(here)
+library(riingo)
+library(reactable)
+
+api_key <-  config::get("tiingo", file = "config.yml")
+
+definitions <-
+  httr::GET(
+    url = str_glue("https://api.tiingo.com/tiingo/fundamentals/definitions?format=csv&token={api_key}")
+    ) %>%
+  content(as = "parsed")  %>%
+  select(statementType, everything()) %>%
+  arrange(statementType)
+
+aapl_financial_statements <- 
+  GET(
+  url = str_glue(
+    "https://api.tiingo.com/tiingo/fundamentals/aapl/statements?format=csv&startDate=2018-01-01&endDate=2020-01-31&token={api_key}"
+  )) %>%
+  content(as = "parsed")  %>% 
+  left_join(definitions)
+
+knitr::opts_chunk$set(message=FALSE, 
+                      warning=FALSE,
+                      comment = NA, 
+                      echo = TRUE)
+```
+
+### Importing the Data
+
+We start as always with importing the 2019 financial statements for Apple and joining it with the data definitions. We covered this process extensively in [this post]() and the full code is below.
+
+```{r, eval=FALSE}
+aapl_financial_statements <- 
+  GET(
+  url = str_glue(
+    "https://api.tiingo.com/tiingo/fundamentals/aapl/statements?format=csv&
+    startDate=2018-01-01&endDate=2020-01-31&token={api_key}"
+  )) %>%
+  content(as = "parsed")  %>% 
+  left_join(definitions)
+```
+
+We can isolate the annual statement with `filter(quarter == 0)`. 
+
+```{r}
+aapl_2019_annual_statements <- 
+aapl_financial_statements %>% 
+  filter(quarter == 0)
+```
+
+We now have an object called `aapl_2019_annual_statements` that holds the 2019 Balance Sheet, Income Statement and Cash Flow Statement for Apple. We can think of this as the raw data reported by the company. As we saw in previous post (like [this one]()), that raw data is important for evaluating the health and value of a company. That process of turning raw data into valuations is the essence of fundamental research. 
+
+However, those items of raw data can also be combined to form ratios that are informative and instructive. In the followinng section we will convert well formatted, tidy financial statements into some key ratios but before we do so, a brief aside on the data science perspective. 
+
+The use of ratios like the Quick Ratio or the Debt Ratio has been part of fundamental research for a long time and it doesn't seem particularly fancy. From a data science perspective, when we form ratios, we are taking multiple pieces of raw data and combining them together in order to find a more informative piece of data.  We can think of this as a flavor of 'feature engineering', which can be defined as "adjusting and reworking predictors to enable models to better uncover predictor-response relationships."[^1] Feature engineering is part of the machine learning process, which is separate from fundmantal analysis. Converting financial statement items to ratios is not feature engineering, but it's a similar idea: we are searching for ways to adjust and rework our data to give us better insights into the future valuation of a company.
+
+[JKR Note: needs more]
+
+[^1]: feat.engineering
+
+### Convert to Ratios
+
+Let's calculate a few ratios, the effective tax rate, net working capital and free cash flow. Note that free cash flow is a function of both effective tax rate and net working capital, so we will calculate effective tax rate and net working capital first, then use them to find free cash flow. 
+
+We will use `summarise()` for this work.
+
+```{r}
+aapl_2019_annual_statements %>% 
+  select(date, year, quarter, dataCode, value) %>% 
+pivot_wider(names_from = "dataCode", values_from = "value") %>% 
+  group_by(date, year, quarter) %>% 
+  summarise(eff_tax_rate = taxExp/ ebt,
+    net_working_capital = assetsCurrent- liabilitiesCurrent,
+    FCF = (ebit* (1 - eff_tax_rate)) + depamor + net_working_capital - capex,
+    ROA = netinc/ totalAssets,
+    debt_ratio = totalLiabilities / totalAssets,
+    work_cap_assets_ratio = (assetsCurrent - liabilitiesCurrent ) / totalAssets,
+    quick_ratio = (cashAndEq + acctRec - investmentsCurrent ) / liabilitiesCurrent,
+    retained_earnings_assets_ratio = retainedEarnings / totalAssets) %>% 
+  pivot_longer(eff_tax_rate:retained_earnings_assets_ratio) %>% 
+    mutate(dataCode = name, 
+           name = c("effective tax rate", "net working capital", "free cash flow", "return on assets", "debt ratio", "working capital ratio", "quick ratio", "retained earnings assets ratio"),
+           units = "$",
+           statementType = "ratios")
+
+```
+
