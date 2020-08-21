@@ -42,7 +42,7 @@ knitr::opts_chunk$set(message=FALSE,
 
 In this post, we will walk through the construction of a function to calculate the Cost of Goods Sold (COGS) based on the Revenue and Goss Profit reported in a financial statement. Often COGS is a separate Income Statement item but it is not one reported in Tiingo fundamental data. 
 
-We covered the Tiingo fundamentals API in detail in [this post]() but by way of quick refresher, the following Income Statement fields are reported. 
+We covered the Tiingo fundamentals API in detail in [this post](https://quantamental-r-draft.netlify.app/posts/2020-08-19-a-brief-aside-on-apis/) but by way of quick refresher, the following Income Statement fields are reported. 
 
 ### Definitions
 

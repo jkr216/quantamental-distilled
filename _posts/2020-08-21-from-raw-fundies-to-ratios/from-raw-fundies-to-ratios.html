@@ -58,7 +58,7 @@
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["ratios.png"]}
+  {"type":"character","attributes":{},"value":["from-raw-fundies-to-ratios_files/bowser-1.9.3/bowser.min.js","from-raw-fundies-to-ratios_files/distill-2.2.21/template.v2.js","from-raw-fundies-to-ratios_files/jquery-1.11.3/jquery.min.js","from-raw-fundies-to-ratios_files/webcomponents-2.0.0/webcomponents.js","ratios.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1012,7 +1012,7 @@ aapl_2019_annual_statements &lt;-
 aapl_financial_statements %&gt;% 
   filter(quarter == 0)</code></pre>
 </div>
-<p>We now have an object called <code>aapl_2019_annual_statements</code> that holds the 2019 Balance Sheet, Income Statement and Cash Flow Statement for Apple. We can think of this as the raw data reported by the company. As we saw in previous post (like <a href="">this one</a>), that raw data is important for evaluating the health and value of a company. That process of turning raw data into valuations is the essence of fundamental research.</p>
+<p>We now have an object called <code>aapl_2019_annual_statements</code> that holds the 2019 Balance Sheet, Income Statement and Cash Flow Statement for Apple. We can think of this as the raw data reported by the company. As we saw in previous post (like <a href="https://quantamental-r-draft.netlify.app/posts/2020-08-18-quanta-versus-funda-mental/">this one</a>), that raw data is important for evaluating the health and value of a company. That process of turning raw data into valuations is the essence of fundamental research.</p>
 <p>However, those items of raw data can also be combined to form ratios that are informative and instructive. In the followinng section we will convert well formatted, tidy financial statements into some key ratios but before we do so, a brief aside on the data science perspective.</p>
 <p>The use of ratios like the Quick Ratio or the Debt Ratio has been part of fundamental research for a long time and it doesn’t seem particularly fancy. From a data science perspective, when we form ratios, we are taking multiple pieces of raw data and combining them together in order to find a more informative piece of data. We can think of this as a flavor of ‘feature engineering’, which can be defined as “adjusting and reworking predictors to enable models to better uncover predictor-response relationships.”<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> Feature engineering is part of the machine learning process, which is separate from fundmantal analysis. Converting financial statement items to ratios is not feature engineering, but it’s a similar idea: we are searching for ways to adjust and rework our data to give us better insights into the future valuation of a company.</p>
 <p>[JKR Note: needs more]</p>
@@ -1035,7 +1035,16 @@ pivot_wider(names_from = &quot;dataCode&quot;, values_from = &quot;value&quot;) 
     retained_earnings_assets_ratio = retainedEarnings / totalAssets) %&gt;% 
   pivot_longer(eff_tax_rate:retained_earnings_assets_ratio) %&gt;% 
     mutate(dataCode = name, 
-           name = c(&quot;effective tax rate&quot;, &quot;net working capital&quot;, &quot;free cash flow&quot;, &quot;return on assets&quot;, &quot;debt ratio&quot;, &quot;working capital ratio&quot;, &quot;quick ratio&quot;, &quot;retained earnings assets ratio&quot;),
+           name = c(
+             &quot;effective tax rate&quot;,
+             &quot;net working capital&quot;,
+             &quot;free cash flow&quot;,
+             &quot;return on assets&quot;,
+             &quot;debt ratio&quot;,
+             &quot;working capital ratio&quot;,
+             &quot;quick ratio&quot;,
+             &quot;retained earnings assets ratio&quot;
+           ),
            units = &quot;$&quot;,
            statementType = &quot;ratios&quot;)</code></pre>
 <pre><code>
@@ -1064,7 +1073,7 @@ pivot_wider(names_from = &quot;dataCode&quot;, values_from = &quot;value&quot;) 
 <section class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>feat.engineering<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p><a href="feat.engineering">feat.engineering</a><a href="#fnref1" class="footnote-back">↩</a></p></li>
 </ol>
 </section>
 <!--radix_placeholder_article_footer-->

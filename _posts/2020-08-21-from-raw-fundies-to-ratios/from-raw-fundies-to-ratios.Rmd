@@ -84,7 +84,7 @@ aapl_financial_statements %>%
   filter(quarter == 0)
 ```
 
-We now have an object called `aapl_2019_annual_statements` that holds the 2019 Balance Sheet, Income Statement and Cash Flow Statement for Apple. We can think of this as the raw data reported by the company. As we saw in previous post (like [this one]()), that raw data is important for evaluating the health and value of a company. That process of turning raw data into valuations is the essence of fundamental research. 
+We now have an object called `aapl_2019_annual_statements` that holds the 2019 Balance Sheet, Income Statement and Cash Flow Statement for Apple. We can think of this as the raw data reported by the company. As we saw in previous post (like [this one](https://quantamental-r-draft.netlify.app/posts/2020-08-18-quanta-versus-funda-mental/)), that raw data is important for evaluating the health and value of a company. That process of turning raw data into valuations is the essence of fundamental research. 
 
 However, those items of raw data can also be combined to form ratios that are informative and instructive. In the followinng section we will convert well formatted, tidy financial statements into some key ratios but before we do so, a brief aside on the data science perspective. 
 
@@ -92,7 +92,7 @@ The use of ratios like the Quick Ratio or the Debt Ratio has been part of fundam
 
 [JKR Note: needs more]
 
-[^1]: feat.engineering
+[^1]: [feat.engineering](feat.engineering)
 
 ### Convert to Ratios
 
@@ -115,7 +115,16 @@ pivot_wider(names_from = "dataCode", values_from = "value") %>%
     retained_earnings_assets_ratio = retainedEarnings / totalAssets) %>% 
   pivot_longer(eff_tax_rate:retained_earnings_assets_ratio) %>% 
     mutate(dataCode = name, 
-           name = c("effective tax rate", "net working capital", "free cash flow", "return on assets", "debt ratio", "working capital ratio", "quick ratio", "retained earnings assets ratio"),
+           name = c(
+             "effective tax rate",
+             "net working capital",
+             "free cash flow",
+             "return on assets",
+             "debt ratio",
+             "working capital ratio",
+             "quick ratio",
+             "retained earnings assets ratio"
+           ),
            units = "$",
            statementType = "ratios")
 

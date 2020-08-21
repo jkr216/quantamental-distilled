@@ -41,12 +41,14 @@
 <meta property="twitter:card" content="summary"/>
 <meta property="twitter:title" content="Quantamental R Blog: Getting Functional for COGS"/>
 <meta property="twitter:description" content="A short article on creating a function to calculate COGS."/>
+<meta property="twitter:site" content="@jkregenstein"/>
+<meta property="twitter:creator" content="@jkregenstein"/>
 
 <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","preview","output"]}},"value":[{"type":"character","attributes":{},"value":["Getting Functional for COGS"]},{"type":"character","attributes":{},"value":["A short article on creating a function to calculate COGS."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Jonathan K. Regenstein"]},{"type":"character","attributes":{},"value":["https://fintech.gatech.edu/#/people"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Sudheer Chava"]},{"type":"character","attributes":{},"value":["https://fintech.gatech.edu/#/people"]}]}]},{"type":"character","attributes":{},"value":["08-19-2020"]},{"type":"character","attributes":{},"value":["cogs-funs.png"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","preview","twitter","output"]}},"value":[{"type":"character","attributes":{},"value":["Getting Functional for COGS"]},{"type":"character","attributes":{},"value":["A short article on creating a function to calculate COGS."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Jonathan K. Regenstein"]},{"type":"character","attributes":{},"value":["https://fintech.gatech.edu/#/people"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Sudheer Chava"]},{"type":"character","attributes":{},"value":["https://fintech.gatech.edu/#/people"]}]}]},{"type":"character","attributes":{},"value":["08-19-2020"]},{"type":"character","attributes":{},"value":["cogs-funs.png"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["site","creator"]}},"value":[{"type":"character","attributes":{},"value":["@jkregenstein"]},{"type":"character","attributes":{},"value":["@jkregenstein"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_depth","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[3]},{"type":"logical","attributes":{},"value":[false]}]}]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -1326,8 +1328,16 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <div class="d-article">
+<h3 class="d-toc-header">Table of Contents</h3>
+<nav class="d-toc" id="TOC">
+<ul>
+<li><a href="#definitions">Definitions</a></li>
+<li><a href="#cogs-code">COGS Code</a></li>
+</ul>
+</nav>
+<hr class="d-toc-separator"/>
 <p>In this post, we will walk through the construction of a function to calculate the Cost of Goods Sold (COGS) based on the Revenue and Goss Profit reported in a financial statement. Often COGS is a separate Income Statement item but it is not one reported in Tiingo fundamental data.</p>
-<p>We covered the Tiingo fundamentals API in detail in <a href="">this post</a> but by way of quick refresher, the following Income Statement fields are reported.</p>
+<p>We covered the Tiingo fundamentals API in detail in <a href="https://quantamental-r-draft.netlify.app/posts/2020-08-19-a-brief-aside-on-apis/">this post</a> but by way of quick refresher, the following Income Statement fields are reported.</p>
 <h3 id="definitions">Definitions</h3>
 <p>Let’s first review the definitions for each of the data codes in the Income Statement.</p>
 <div class="layout-chunk" data-layout="l-body">

@@ -111,7 +111,7 @@ aapl_2019_annual_is <-
 
 Tiingo does not include an entry for Cost of Goods Sold, or COGS. That's a common item and we can calculate it from the difference between `revenue` and `grossProfit` items. We built a custom function to do this called `cogs_get_funs()` that we can pass an income statement to in order to get back the COGS. 
 
-To learn about how we constructed this function, have a look at [this post]().
+To learn about how we constructed this function, have a look at [this post](https://quantamental-r-draft.netlify.app/posts/2020-08-19-getting-functional-for-cogs/).
 
 
 ```{r, echo = FALSE}
