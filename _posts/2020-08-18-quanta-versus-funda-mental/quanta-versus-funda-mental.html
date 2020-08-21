@@ -34,12 +34,18 @@
   <meta property="og:title" content="Quanta versus Funda Mental"/>
   <meta property="og:type" content="article"/>
   <meta property="og:description" content="A quick introduction to what mean by quantamental."/>
+  <meta property="og:image" content="http://quantamentalr.com/q-f.png"/>
+  <meta property="og:image:width" content="700"/>
+  <meta property="og:image:height" content="450"/>
   <meta property="og:locale" content="en_US"/>
   
   <!--  https://dev.twitter.com/cards/types/summary -->
-  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:card" content="summary_large_image"/>
   <meta property="twitter:title" content="Quanta versus Funda Mental"/>
   <meta property="twitter:description" content="A quick introduction to what mean by quantamental."/>
+  <meta property="twitter:image" content="http://quantamentalr.com/q-f.png"/>
+  <meta property="twitter:image:width" content="700"/>
+  <meta property="twitter:image:height" content="450"/>
   <meta property="twitter:site" content="@jkregenstein"/>
   <meta property="twitter:creator" content="@jkregenstein"/>
   
@@ -52,7 +58,7 @@
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["q-fpng","quanta-versus-funda-mental_files/bowser-1.9.3/bowser.min.js","quanta-versus-funda-mental_files/crosstalk-1.0.0/css/crosstalk.css","quanta-versus-funda-mental_files/crosstalk-1.0.0/js/crosstalk.js","quanta-versus-funda-mental_files/crosstalk-1.0.0/js/crosstalk.js.map","quanta-versus-funda-mental_files/crosstalk-1.0.0/js/crosstalk.min.js","quanta-versus-funda-mental_files/crosstalk-1.0.0/js/crosstalk.min.js.map","quanta-versus-funda-mental_files/distill-2.2.21/template.v2.js","quanta-versus-funda-mental_files/htmlwidgets-1.3/htmlwidgets.js","quanta-versus-funda-mental_files/jquery-1.11.3/jquery-AUTHORS.txt","quanta-versus-funda-mental_files/jquery-1.11.3/jquery.js","quanta-versus-funda-mental_files/jquery-1.11.3/jquery.min.js","quanta-versus-funda-mental_files/jquery-1.11.3/jquery.min.map","quanta-versus-funda-mental_files/plotly-binding-4.9.2.1/plotly.js","quanta-versus-funda-mental_files/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css","quanta-versus-funda-mental_files/plotly-main-1.52.2/plotly-latest.min.js","quanta-versus-funda-mental_files/typedarray-0.1/typedarray.min.js","quanta-versus-funda-mental_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["q-f.png","quanta-versus-funda-mental_files/bowser-1.9.3/bowser.min.js","quanta-versus-funda-mental_files/crosstalk-1.0.0/css/crosstalk.css","quanta-versus-funda-mental_files/crosstalk-1.0.0/js/crosstalk.js","quanta-versus-funda-mental_files/crosstalk-1.0.0/js/crosstalk.js.map","quanta-versus-funda-mental_files/crosstalk-1.0.0/js/crosstalk.min.js","quanta-versus-funda-mental_files/crosstalk-1.0.0/js/crosstalk.min.js.map","quanta-versus-funda-mental_files/distill-2.2.21/template.v2.js","quanta-versus-funda-mental_files/htmlwidgets-1.3/htmlwidgets.js","quanta-versus-funda-mental_files/jquery-1.11.3/jquery-AUTHORS.txt","quanta-versus-funda-mental_files/jquery-1.11.3/jquery.js","quanta-versus-funda-mental_files/jquery-1.11.3/jquery.min.js","quanta-versus-funda-mental_files/jquery-1.11.3/jquery.min.map","quanta-versus-funda-mental_files/plotly-binding-4.9.2.1/plotly.js","quanta-versus-funda-mental_files/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css","quanta-versus-funda-mental_files/plotly-main-1.52.2/plotly-latest.min.js","quanta-versus-funda-mental_files/typedarray-0.1/typedarray.min.js","quanta-versus-funda-mental_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -940,7 +946,12 @@
   </script>
   
   <!--/radix_placeholder_distill-->
+  <script src="quanta-versus-funda-mental_files/core-js-2.5.3/shim.min.js"></script>
+  <script src="quanta-versus-funda-mental_files/react-16.12.0/react.min.js"></script>
+  <script src="quanta-versus-funda-mental_files/react-16.12.0/react-dom.min.js"></script>
+  <script src="quanta-versus-funda-mental_files/reactwidget-1.0.0/react-tools.js"></script>
   <script src="quanta-versus-funda-mental_files/htmlwidgets-1.3/htmlwidgets.js"></script>
+  <script src="quanta-versus-funda-mental_files/reactable-binding-0.2.0/reactable.js"></script>
   <script src="quanta-versus-funda-mental_files/plotly-binding-4.9.2.1/plotly.js"></script>
   <script src="quanta-versus-funda-mental_files/typedarray-0.1/typedarray.min.js"></script>
   <script src="quanta-versus-funda-mental_files/jquery-1.11.3/jquery.min.js"></script>
@@ -999,7 +1010,7 @@
 <p>Relatedly, in QM, those financial statement items can themselves be the the variables of interest. We might be attempting to forecast or nowcast financial statement items, in order to forecast or nowcast price movements.</p>
 <p>In FM, the relationship between financial statement items and the variable of interest, usually price, is not statistical, it’s the not the result of estimating model parameters. It’s the result of assumptions or calculations about the relationship between items and price. In QM, the relationships can be modeled or estimated using statistical learning or machine learning, which depends on larger data sets and generally longer history than FM.</p>
 <h3 id="definitions">Definitions</h3>
-<p>Let’s first review the definitions for each of the data codes.</p>
+<p>Let’s first review the definitions for each of the data codes. We are accessing this data via an API and very often an API will supply a data dictionary similar to these definitions.</p>
 <div class="layout-chunk" data-layout="l-body">
 <pre class="r"><code>
 definitions &lt;-
@@ -1010,22 +1021,11 @@ definitions &lt;-
   select(statementType, everything()) %&gt;%
   arrange(statementType)  
 
-definitions</code></pre>
-<pre><code>
-# A tibble: 84 x 5
-   statementType dataCode    name         description            units
-   &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;                  &lt;chr&gt;
- 1 balanceSheet  sharesBasic Shares Outs… Outstanding shares     &lt;NA&gt; 
- 2 balanceSheet  ppeq        Property, P… A component of assets… $    
- 3 balanceSheet  investment… Current Inv… The current portion o… $    
- 4 balanceSheet  taxLiabili… Tax Liabili… A component of liabil… $    
- 5 balanceSheet  assetsNonC… Other Assets Assets that cannot be… $    
- 6 balanceSheet  taxAssets   Tax Assets   A component of assets… $    
- 7 balanceSheet  debtCurrent Current Debt Current debt - debt d… $    
- 8 balanceSheet  retainedEa… Accumulated… A component of Shareh… $    
- 9 balanceSheet  liabilitie… Other Liabi… Long-term liabilities… $    
-10 balanceSheet  liabilitie… Current Lia… Debt or liabilities t… $    
-# … with 74 more rows</code></pre>
+definitions %&gt;% 
+  head() %&gt;% 
+  reactable()</code></pre>
+<div id="htmlwidget-e12dcf97b9ed375194a3" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e12dcf97b9ed375194a3">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"statementType":["balanceSheet","balanceSheet","balanceSheet","balanceSheet","balanceSheet","balanceSheet"],"dataCode":["sharesBasic","ppeq","investmentsCurrent","taxLiabilities","assetsNonCurrent","taxAssets"],"name":["Shares Outstanding","Property, Plant & Equipment","Current Investments","Tax Liabilities","Other Assets","Tax Assets"],"description":["Outstanding shares","A component of assets representing the total amount of marketable and non-marketable securties, loans receivable and other invested assets.","The current portion of Investments, reported if the company operates a classified balance sheet that segments current and non-current assets.","A component of liabilities representing outstanding tax liabilities.","Assets that cannot be easily converted into cash and where the value of the item will be realized in a year","A component of assets representing tax assets and receivables."],"units":[null,"$","$","$","$","$"]},"columns":[{"accessor":"statementType","name":"statementType","type":"character"},{"accessor":"dataCode","name":"dataCode","type":"character"},{"accessor":"name","name":"name","type":"character"},{"accessor":"description","name":"description","type":"character"},{"accessor":"units","name":"units","type":"character"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"dataKey":"3e50b68bada4cbffe88ac8d71a141cac"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <h3 id="import-financials-from-tiingo">Import Financials from Tiingo</h3>
 <div class="layout-chunk" data-layout="l-body">
@@ -1052,7 +1052,7 @@ aapl_2019_annual_is &lt;-
          quarter == 0)</code></pre>
 </div>
 <p>Tiingo does not include an entry for Cost of Goods Sold, or COGS. That’s a common item and we can calculate it from the difference between <code>revenue</code> and <code>grossProfit</code> items. We built a custom function to do this called <code>cogs_get_funs()</code> that we can pass an income statement to in order to get back the COGS.</p>
-<p>To learn about how we constructed this function, have a look at <a href="">this post</a>.</p>
+<p>To learn about how we constructed this function, have a look at <a href="https://quantamental-r-draft.netlify.app/posts/2020-08-19-getting-functional-for-cogs/">this post</a>.</p>
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
@@ -1083,6 +1083,72 @@ aapl_2019_annual_is %&gt;%
                         TRUE ~ &quot;relative&quot;),
     dataCode = fct_relevel(
       dataCode,
+      c(&quot;revenue&quot;,
+        &quot;cogs&quot;,
+        &quot;grossProfit&quot;,
+        &quot;rnd&quot;,
+        &quot;sga&quot;,
+        &quot;opinc&quot;,
+        &quot;intexp&quot;,
+        &quot;ebt&quot;,
+        &quot;taxExp&quot;,
+        &quot;netinc&quot;
+        )
+    ),
+    name = fct_relevel(
+      name,
+      c(&quot;Revenue&quot;,
+        &quot;Cost of Goods Sold&quot;,
+        &quot;Gross Profit&quot;,
+        &quot;Research and Development&quot;,
+        &quot;Selling, General and Administrative&quot;,
+        &quot;Operating Income&quot;,
+        &quot;Interest Expence&quot;,
+        &quot;Earnings before tax&quot;,
+        &quot;Tax Expense&quot;,
+        &quot;Net Income&quot;
+        )
+    )
+  ) %&gt;% 
+  arrange(dataCode) %&gt;% 
+  select(dataCode, value, measure, name) %&gt;% 
+  plot_ly(name = &quot;Income Statement&quot;, type = &quot;waterfall&quot;, measure = ~measure, 
+  x = ~dataCode, textposition = &quot;outside&quot;, y= ~value,
+  text = ~str_glue(&quot;{name}
+                   ${scales::label_number_si(accuracy = 0.1)(value)}&quot;),
+  hoverinfo = &#39;text&#39;,
+  showlegend = F
+  ) %&gt;%
+  # connector = list(line = list(color= &quot;rgb(63, 63, 63)&quot;))) %&gt;%
+  layout(title = str_glue(&quot;Income statement 2019&quot;),
+        xaxis = list(title = &quot;&quot;),
+        yaxis = list(title = &quot;&quot;,
+                     tickprefix = &quot;$&quot;),
+        autosize = TRUE,
+        showlegend = TRUE)</code></pre>
+<div id="htmlwidget-dc4b408960aabf28907e" style="width:624px;height:384px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-dc4b408960aabf28907e">{"x":{"visdat":{"597b504c442c":["function () ","plotlyVisDat"]},"cur_data":"597b504c442c","attrs":{"597b504c442c":{"measure":{},"x":{},"textposition":"outside","y":{},"text":{},"hoverinfo":"text","showlegend":false,"name":"Income Statement","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"waterfall"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Income statement 2019","xaxis":{"domain":[0,1],"automargin":true,"title":"","type":"category","categoryorder":"array","categoryarray":["revenue","cogs","grossProfit","rnd","sga","opinc","intexp","ebt","taxExp","netinc"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"","tickprefix":"$"},"autosize":true,"showlegend":true,"hovermode":"closest"},"source":"A","config":{"showSendToCloud":false},"data":[{"measure":["relative","relative","total","relative","relative","total","relative","total","relative","total"],"x":["revenue","cogs","grossProfit","rnd","sga","opinc","intexp","ebt","taxExp","netinc"],"textposition":["outside","outside","outside","outside","outside","outside","outside","outside","outside","outside"],"y":[260174000000,-161782000000,98392000000,-16217000000,-18245000000,63930000000,-0,65737000000,-10481000000,55256000000],"text":["Revenue<br />$260.2B","Cost of Goods Sold<br />$-161.8B","Gross Profit<br />$98.4B","Research & Development<br />$-16.2B","Selling, General & Administrative<br />$-18.2B","Operating Income<br />$63.9B","Interest Expense<br />$0.0","Earnings before tax<br />$65.7B","Tax Expense<br />$-10.5B","Net Income<br />$55.3B"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text"],"showlegend":false,"name":"Income Statement","type":"waterfall","xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<p>We start with Revenue, and subtract COGS to get Gross Profit. We then subtract Research and Development Costs, and Selling, General and Adminstrative Costs to get Operating Income (or EBIT). From there, we move to EBT and finally Net Income.</p>
+<p>Similar to what we did with the <a href="link%20to%20url">COGS function</a>, we could wrap this entire process into a function that returns a chart, instead of returning a number or a data frame.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+income_statement_waterfall_charter &lt;- function(income_statement){
+  income_statement %&gt;% 
+  # select(-year, -quarter) %&gt;% 
+  bind_rows(cogs_get_funs(.)) %&gt;% 
+  filter(
+    dataCode %in% c(&quot;revenue&quot;, &quot;cogs&quot;, &quot;grossProfit&quot;, &quot;rnd&quot;, &quot;sga&quot;, &quot;opinc&quot;, &quot;intexp&quot;, &quot;ebt&quot;, &quot;taxExp&quot;, &quot;netinc&quot;),
+    date == max(date)
+  ) %&gt;% 
+  arrange(value) %&gt;% 
+  mutate(
+    value = case_when(dataCode %in% c(&quot;cogs&quot;, &quot;taxExp&quot;, &quot;intexp&quot;, &quot;rnd&quot;, &quot;sga&quot;) ~ value * -1,
+                      TRUE ~ value),
+    measure = case_when(dataCode %in% c(&quot;grossProfit&quot;, &quot;opinc&quot;, &quot;ebt&quot;, &quot;netinc&quot;) ~ &quot;total&quot;,
+                        TRUE ~ &quot;relative&quot;),
+    dataCode = fct_relevel(
+      dataCode,
       c(&quot;revenue&quot;, 
         &quot;cogs&quot;,
         &quot;grossProfit&quot;,
@@ -1094,12 +1160,26 @@ aapl_2019_annual_is %&gt;%
         &quot;taxExp&quot;,
         &quot;netinc&quot;
         )
+    ),
+    name = fct_relevel(
+      name,
+      c(&quot;Revenue&quot;,
+        &quot;Cost of Goods Sold&quot;,
+        &quot;Gross Profit&quot;,
+        &quot;Research and Development&quot;,
+        &quot;Selling, General and Administrative&quot;,
+        &quot;Operating Income&quot;,
+        &quot;Interest Expence&quot;,
+        &quot;Earnings before tax&quot;,
+        &quot;Tax Expense&quot;,
+        &quot;Net Income&quot;
+        )
     )
   ) %&gt;% 
   arrange(dataCode) %&gt;% 
   select(dataCode, value, measure, name) %&gt;% 
   plot_ly(name = &quot;Income Statement&quot;, type = &quot;waterfall&quot;, measure = ~measure,
-  x = ~dataCode, textposition = &quot;outside&quot;, y= ~value, 
+  x = ~dataCode, textposition = &quot;outside&quot;, y = ~value, 
   text = ~str_glue(&quot;{name}
                    ${scales::label_number_si(accuracy = 0.1)(value)}&quot;),
   hoverinfo = &#39;text&#39;,
@@ -1107,14 +1187,21 @@ aapl_2019_annual_is %&gt;%
   ) %&gt;% 
   # connector = list(line = list(color= &quot;rgb(63, 63, 63)&quot;))) %&gt;%
   layout(title = str_glue(&quot;Income statement 2019&quot;),
-        xaxis = list(title = &quot;&quot;),
+        xaxis = list(title = &quot;&quot;, tickfont = &quot;16&quot;, ticks = &quot;outside&quot;),
         yaxis = list(title = &quot;&quot;,
                      tickprefix = &quot;$&quot;),
         autosize = TRUE,
-        showlegend = TRUE)</code></pre>
-<div id="htmlwidget-e5a5bf7145de058db6e2" style="width:624px;height:384px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e5a5bf7145de058db6e2">{"x":{"visdat":{"4f129ecd903":["function () ","plotlyVisDat"]},"cur_data":"4f129ecd903","attrs":{"4f129ecd903":{"measure":{},"x":{},"textposition":"outside","y":{},"text":{},"hoverinfo":"text","showlegend":false,"name":"Income Statement","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"waterfall"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Income statement 2019","xaxis":{"domain":[0,1],"automargin":true,"title":"","type":"category","categoryorder":"array","categoryarray":["revenue","cogs","grossProfit","rnd","sga","opinc","intexp","ebt","taxExp","netinc"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"","tickprefix":"$"},"autosize":true,"showlegend":true,"hovermode":"closest"},"source":"A","config":{"showSendToCloud":false},"data":[{"measure":["relative","relative","total","relative","relative","total","relative","total","relative","total"],"x":["revenue","cogs","grossProfit","rnd","sga","opinc","intexp","ebt","taxExp","netinc"],"textposition":["outside","outside","outside","outside","outside","outside","outside","outside","outside","outside"],"y":[260174000000,-161782000000,98392000000,-16217000000,-18245000000,63930000000,-0,65737000000,-10481000000,55256000000],"text":["Revenue<br />$260.2B","Cost of Goods Sold<br />$-161.8B","Gross Profit<br />$98.4B","Research & Development<br />$-16.2B","Selling, General & Administrative<br />$-18.2B","Operating Income<br />$63.9B","Interest Expense<br />$0.0","Earnings before tax<br />$65.7B","Tax Expense<br />$-10.5B","Net Income<br />$55.3B"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text"],"showlegend":false,"name":"Income Statement","type":"waterfall","xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+        showlegend = TRUE)
+}</code></pre>
 </div>
+<p>Now we pass the <code>aapl_2019_annual_is</code> data frame to the function.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+income_statement_waterfall_charter(aapl_2019_annual_is)</code></pre>
+<div id="htmlwidget-e7884cf711c32dc3028f" style="width:624px;height:384px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e7884cf711c32dc3028f">{"x":{"visdat":{"597b4693c5e5":["function () ","plotlyVisDat"]},"cur_data":"597b4693c5e5","attrs":{"597b4693c5e5":{"measure":{},"x":{},"textposition":"outside","y":{},"text":{},"hoverinfo":"text","showlegend":false,"name":"Income Statement","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"waterfall"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Income statement 2019","xaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":"16","ticks":"outside","type":"category","categoryorder":"array","categoryarray":["revenue","cogs","grossProfit","rnd","sga","opinc","intexp","ebt","taxExp","netinc"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"","tickprefix":"$"},"autosize":true,"showlegend":true,"hovermode":"closest"},"source":"A","config":{"showSendToCloud":false},"data":[{"measure":["relative","relative","total","relative","relative","total","relative","total","relative","total"],"x":["revenue","cogs","grossProfit","rnd","sga","opinc","intexp","ebt","taxExp","netinc"],"textposition":["outside","outside","outside","outside","outside","outside","outside","outside","outside","outside"],"y":[260174000000,-161782000000,98392000000,-16217000000,-18245000000,63930000000,-0,65737000000,-10481000000,55256000000],"text":["Revenue<br />$260.2B","Cost of Goods Sold<br />$-161.8B","Gross Profit<br />$98.4B","Research & Development<br />$-16.2B","Selling, General & Administrative<br />$-18.2B","Operating Income<br />$63.9B","Interest Expense<br />$0.0","Earnings before tax<br />$65.7B","Tax Expense<br />$-10.5B","Net Income<br />$55.3B"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text"],"showlegend":false,"name":"Income Statement","type":"waterfall","xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<p>Note that we actually called our <code>cogs_get_funs()</code> function inside that visualizer function. We can call functions inside of other functions.</p>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
