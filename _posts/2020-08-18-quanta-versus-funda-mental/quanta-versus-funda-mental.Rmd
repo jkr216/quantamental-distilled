@@ -58,9 +58,10 @@ In FM, the relationship between financial statement items and the variable of in
 Let's first review the definitions for each of the data codes. We are accessing this data via an API and very often an API will supply a data dictionary similar to these definitions.
 
 ```{r}
-definitions <-
+definitions <- 
   httr::GET(
-    url = str_glue("https://api.tiingo.com/tiingo/fundamentals/definitions?format=csv&token={api_key}")
+url = 
+  str_glue("https://api.tiingo.com/tiingo/fundamentals/definitions?format=csv&token={api_key}")
     ) %>%
   content(as = "parsed")  %>%
   select(statementType, everything()) %>%
@@ -136,19 +137,25 @@ cogs_get_funs(aapl_2019_annual_is)
 
 ### Visualize Income Statement
 
+
+Let's use a waterfall chart to visualize the Income Statement and the way in which Revenue flows to Gross Profit after subtracting Cost of Goods sold, to Operating Income (or EBIT) after subtracting R&D and Selling, General and Admin costs, to EBT after subtracting Interest Expense, to Net Income, after subtracting Tax Expense. This style of chart is called a waterflow because numbers flow from the highest down to the lowest. We think it's an intuitive way to visualize how an income statment goes from a top line number to a bottom line number. 
+
 ```{r}
 aapl_2019_annual_is %>% 
   # select(-year, -quarter) %>% 
   bind_rows(cogs_get_funs(.)) %>% 
   filter(
-    dataCode %in% c("revenue", "cogs", "grossProfit", "rnd", "sga", "opinc", "intexp", "ebt", "taxExp", "netinc"),
+    dataCode %in% c("revenue", "cogs", "grossProfit", "rnd", "
+                    sga", "opinc", "intexp", "ebt", "taxExp", "netinc"),
     date == max(date)
   ) %>% 
   arrange(value) %>% 
   mutate(
-    value = case_when(dataCode %in% c("cogs", "taxExp", "intexp", "rnd", "sga") ~ value * -1,
+    value = case_when(dataCode %in% c("cogs", "taxExp", 
+                                      "intexp", "rnd", "sga") ~ value * -1,
                       TRUE ~ value),
-    measure = case_when(dataCode %in% c("grossProfit", "opinc", "ebt", "netinc") ~ "total",
+    measure = case_when(dataCode %in% c("grossProfit", "opinc", 
+                                        "ebt", "netinc") ~ "total",
                         TRUE ~ "relative"),
     dataCode = fct_relevel(
       dataCode,
@@ -201,22 +208,25 @@ aapl_2019_annual_is %>%
 
 We start with Revenue, and subtract COGS to get Gross Profit. We then subtract Research and Development Costs, and Selling, General and Adminstrative Costs to get Operating Income (or EBIT). From there, we move to EBT and finally Net Income. 
 
-Similar to what we did with the [COGS function](link to url), we could wrap this entire process into a function that returns a chart, instead of returning a number or a data frame. 
+Similar to what we did with the [COGS function](https://quantamental-r-draft.netlify.app/posts/2020-08-19-getting-functional-for-cogs/), we can wrap this entire process into a function that returns a chart, instead of returning a number or a data frame. 
 
 ```{r}
-income_statement_waterfall_charter <- function(income_statement){
+income_statement_waterfall_charter <- function(income_statement, ticker_for_title){
   income_statement %>% 
   # select(-year, -quarter) %>% 
   bind_rows(cogs_get_funs(.)) %>% 
   filter(
-    dataCode %in% c("revenue", "cogs", "grossProfit", "rnd", "sga", "opinc", "intexp", "ebt", "taxExp", "netinc"),
+    dataCode %in% c("revenue", "cogs", "grossProfit", "rnd", "sga", 
+                    "opinc", "intexp", "ebt", "taxExp", "netinc"),
     date == max(date)
   ) %>% 
   arrange(value) %>% 
   mutate(
-    value = case_when(dataCode %in% c("cogs", "taxExp", "intexp", "rnd", "sga") ~ value * -1,
+    value = case_when(dataCode %in% c("cogs", "taxExp", "intexp", 
+                                      "rnd", "sga") ~ value * -1,
                       TRUE ~ value),
-    measure = case_when(dataCode %in% c("grossProfit", "opinc", "ebt", "netinc") ~ "total",
+    measure = case_when(dataCode %in% c("grossProfit", "opinc", 
+                                        "ebt", "netinc") ~ "total",
                         TRUE ~ "relative"),
     dataCode = fct_relevel(
       dataCode,
@@ -257,7 +267,7 @@ income_statement_waterfall_charter <- function(income_statement){
   showlegend = F
   ) %>% 
   # connector = list(line = list(color= "rgb(63, 63, 63)"))) %>%
-  layout(title = str_glue("Income statement 2019"),
+  layout(title = str_glue("{ticker_for_title} Income statement 2019"),
         xaxis = list(title = "", tickfont = "16", ticks = "outside"),
         yaxis = list(title = "",
                      tickprefix = "$"),
@@ -270,9 +280,32 @@ income_statement_waterfall_charter <- function(income_statement){
 Now we pass the `aapl_2019_annual_is` data frame to the function. 
 
 ```{r}
-income_statement_waterfall_charter(aapl_2019_annual_is)
+income_statement_waterfall_charter(aapl_2019_annual_is, "Apple")
 ```
 
 Note that we actually called our `cogs_get_funs()` function inside that visualizer function. We can call functions inside of other functions. 
+
+
+Let's say we like that chart of Apple's Income Statement and want to replicate it for another ticker, MSFT.  We can wrap the bottom to top, data import to visualization, in one function that takes one parameter, a ticker.
+
+```{r}
+options(width = 60)
+ticker_to_waterfall_funs <- function(ticker){
+  GET(
+  url = str_glue(
+"https://api.tiingo.com/tiingo/fundamentals/{ticker}/statements?format=csv&startDate=2018-01-01&endDate=2020-01-31&token={api_key}"
+  )) %>%
+  content(as = "parsed")  %>% 
+  left_join(definitions) %>% 
+  filter(statementType == "incomeStatement",
+         year == 2019,
+         quarter == 0) %>% 
+  income_statement_waterfall_charter(ticker_for_title = ticker)
+}
+
+ticker_to_waterfall_funs("MSFT")
+```
+
+
 
 
