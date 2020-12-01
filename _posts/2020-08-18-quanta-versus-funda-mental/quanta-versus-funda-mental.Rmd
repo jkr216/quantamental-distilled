@@ -137,7 +137,6 @@ cogs_get_funs(aapl_2019_annual_is)
 
 ### Visualize Income Statement
 
-
 Let's use a waterfall chart to visualize the Income Statement and the way in which Revenue flows to Gross Profit after subtracting Cost of Goods sold, to Operating Income (or EBIT) after subtracting R&D and Selling, General and Admin costs, to EBT after subtracting Interest Expense, to Net Income, after subtracting Tax Expense. This style of chart is called a waterflow because numbers flow from the highest down to the lowest. We think it's an intuitive way to visualize how an income statment goes from a top line number to a bottom line number. 
 
 ```{r}

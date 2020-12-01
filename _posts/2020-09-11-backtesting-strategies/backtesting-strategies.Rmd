@@ -1,0 +1,77 @@
+---
+title: "Backtesting Strategies"
+description: |
+  A short description of the post.
+author:
+  - name: Jonathan K. Regenstein
+    url: https://fintech.gatech.edu/#/people
+  - name: Sudheer Chava
+    url: https://fintech.gatech.edu/#/people
+date: 09-11-2020
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(tidyquant)
+library(timetk)
+# library(tibbletime)
+library(scales)
+library(highcharter)
+library(broom)
+library(PerformanceAnalytics)
+library(riingo)
+library(plotly)
+library(roll)
+
+api_key <-  config::get("tiingo", file = "config.yml")
+
+riingo::riingo_set_token(api_key)
+
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+
+prices <- 
+  "VFINX" %>% 
+  riingo_prices(start_date = "1990-01-01")
+
+head(prices)
+```
+
+
+```{r}
+prices %>% 
+  select(ticker, date, close) %>% 
+  mutate(date = ymd(date), 
+         daily_return = replace_na(close/lag(close) - 1, 0),
+         sma_50 = roll_mean(as.matrix(close), 50),
+         sma_200 = roll_mean(as.matrix(close), 200),
+         signal = if_else(sma_50 > sma_200, 1, -1) %>% lag() %>% replace_na(0),
+         position = signal * daily_return) %>% 
+  tail()
+```
+
+```{r}
+prices %>% 
+  tk_augment_slidify(close,
+                     .f = "mean",
+                     .align = "right",
+                     .partial = FALSE,
+                      .period = c(25, 50, 100, 200)
+                     ) %>% 
+  select(ticker, date, contains("close", ignore.case = FALSE)) %>% 
+  drop_na() %>% 
+  mutate(date = ymd(date), 
+         daily_return = replace_na(close/lag(close) - 1, 0),
+         # what signal do we want? 
+         signal = if_else(close_roll_50 > close_roll_200, 1, -1) %>% lag() %>% replace_na(0),
+         position = signal * daily_return) %>% 
+  tail()
+```
+
